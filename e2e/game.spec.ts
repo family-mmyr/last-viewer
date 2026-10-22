@@ -1,0 +1,25 @@
+import { test, expect } from '@playwright/test';
+test('mobile: start, no-comment escape, reset, viewer hint and stop',async({page})=>{
+  const errors:string[]=[];
+  page.on('pageerror',e=>errors.push(e.message));
+  await page.goto('./');
+  await expect(page.locator('canvas')).toBeVisible();
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.getByRole('combobox').selectOption('800');
+  await page.getByRole('button',{name:'自律プレイ開始'}).click();
+  await expect(page.getByRole('status')).toContainText('脱出成功',{timeout:15000});
+  await page.getByRole('button',{name:'リセット',exact:true}).click();
+  await expect(page.getByRole('status')).toHaveCount(0);
+  await expect(page.getByText('接続待機 / 00 ACTIONS')).toBeVisible();
+  await page.getByLabel('ぽこに伝える').fill('絵画を調べて');
+  await page.getByRole('button',{name:'送信',exact:true}).click();
+  await page.getByRole('button',{name:'自律プレイ開始'}).click();
+  await expect(page.locator('.narration')).toContainText('管理者 T-09');
+  await page.getByRole('button',{name:'停止',exact:true}).click();
+  const turn=await page.locator('.play .panelbar').textContent();
+  await page.waitForTimeout(1100);
+  expect(await page.locator('.play .panelbar').textContent()).toBe(turn);
+  await page.screenshot({path:'docs/mobile-preview.png',fullPage:true});
+  expect(await page.locator('article.poko').last().evaluate(el=>el.getBoundingClientRect().width)).toBeGreaterThan(200);
+  expect(errors).toEqual([]);
+});
