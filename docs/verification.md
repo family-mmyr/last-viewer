@@ -33,14 +33,17 @@ npm run test:e2e
 ```sh
 CHROMIUM_PATH=/usr/bin/chromium npm run test:e2e
 ```
-GitHub Actionsにもビルド後のブラウザテストを設定済み。CI環境での実行はまだ未確認。
+GitHub Actionsにもビルド後のブラウザテストを設定済み。GitHub Actions上でもユニットテスト・ビルド・ブラウザテストがすべて成功。
 
 ## 未検証
 - iPhone Safari実機
 - WebKitブラウザ
 - GitHub Pagesへの実デプロイと公開URL上の挙動
 
-公開作業を開始。検証済みの変更をmainへ反映する。公開成功はActionsのdeployジョブで確認する。
+検証済みの変更はmainへ反映済み（5ea320a）。
+Actions run 39776238877 はbuild成功、deploy失敗。Pagesが未有効のため404で停止。
+https://github.com/family-mmyr/last-viewer/settings/pages でSourceをGitHub Actionsに設定後、失敗ジョブを再実行する。
+設定APIへの環境からのアクセスはForbidden。非公開リポジトリの可視性は変更していない。
 Pages設定はリポジトリ管理者がGitHub Actionsに切り替える必要がある。
 
 ## 公開後のiPhone Safari確認手順
