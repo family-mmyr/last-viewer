@@ -40,11 +40,18 @@ GitHub Actionsにもビルド後のブラウザテストを設定済み。GitHub
 - WebKitブラウザ
 - GitHub Pagesへの実デプロイと公開URL上の挙動
 
-検証済みの変更はmainへ反映済み（5ea320a）。
-Actions run 39776238877 はbuild成功、deploy失敗。Pagesが未有効のため404で停止。
-https://github.com/family-mmyr/last-viewer/settings/pages でSourceをGitHub Actionsに設定後、失敗ジョブを再実行する。
-設定APIへの環境からのアクセスはForbidden。非公開リポジトリの可視性は変更していない。
-Pages設定はリポジトリ管理者がGitHub Actionsに切り替える必要がある。
+## Pages公開作業（2026-10-24）
+ユーザーによるリポジトリのpublic化を確認。
+actions/configure-pages@v5（enablement: true）をdeploy前に追加した。
+ローカルのユニットテスト8件・ビルドと、GitHub Actions上のビルド・ブラウザテストは成功。
+Actions run 40050686460 の初回Pages有効化は
+「Resource not accessible by integration」で拒否された。
+設定APIへの環境からのアクセスもForbidden。Pagesの有効化・公開は未完了。
+
+管理者が https://github.com/family-mmyr/last-viewer/settings/pages で
+Build and deployment → Source → GitHub Actionsを選択する必要がある。
+その後、同runの失敗ジョブのみを再実行する。
+https://github.com/family-mmyr/last-viewer/actions/runs/40050686460
 
 ## 公開後のiPhone Safari確認手順
 1. iOS 16以降のSafariで https://family-mmyr.github.io/last-viewer/ を開く。
